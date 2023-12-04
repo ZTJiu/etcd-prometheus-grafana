@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.50.98:9090']
+
+  - job_name: 'pushgateway'
+    honor_labels: true
+    static_configs:
+    - targets: ['192.168.50.98:9091']
+
+  - job_name: etcd_server
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.50.98:2379']
+
+  - job_name: minio-job
+    scrape_interval: 5s
+    bearer_token: minioadmin
+    metrics_path: /minio/v2/metrics/cluster
+    scheme: http
+    static_configs:
+      - targets: ['192.168.50.98:9000']
